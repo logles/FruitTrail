@@ -7,7 +7,7 @@ interface ITree {
     latitude: number;
     longitude: number;
   };
-  createdBy: string; // User ID
+  createdBy: Schema.Types.ObjectId
 }
 
 const treeSchema = new Schema<ITree>({

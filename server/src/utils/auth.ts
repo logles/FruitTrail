@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request } from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const secret = process.env.JWT_SECRET as string;
 const expiration = '2h';

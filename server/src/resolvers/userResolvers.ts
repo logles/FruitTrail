@@ -1,8 +1,7 @@
 // resolvers/userResolvers.ts
 
-import { User } from '../models/User';
-import { AuthenticationError } from 'apollo-server-express';
-import { signToken } from '../utils/auth';
+import { User } from '../models/User.js';
+import { signToken } from '../utils/auth.js';
 
 export const resolvers = {
   Query: {
@@ -10,21 +9,25 @@ export const resolvers = {
       if (context.user) {
         return User.findById(context.user._id);
       }
-      throw new AuthenticationError('Not logged in');
+      throw new Error('Not logged in');
     },
   },
   Mutation: {
-    login: async (_: any, { username, password }: any) => {
+    login: async (_parent: any, { username, password }: any) => {
       const user = await User.findOne({ username });
       if (!user || !(await user.isCorrectPassword(password))) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new Error('Incorrect credentials');
       }
-      const token = signToken(user);
+      const{_id, username:userUsername} = user
+      const userId = _id.toString()
+      const token = signToken({_id:userId, username: userUsername});
       return { token, user };
     },
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
-      const token = signToken(user);
+      const{_id, username:userUsername} = user
+      const userId = _id.toString()
+      const token = signToken({_id:userId, username: userUsername});
       return { token, user };
     },
   },

@@ -1,5 +1,5 @@
-import { Tree } from '../models/Tree';
-import { AuthenticationError } from 'apollo-server-express';
+import { Tree } from '../models/Tree.js';
+
 
 export const treeResolvers = {
   Query: {
@@ -8,7 +8,7 @@ export const treeResolvers = {
   },
   Mutation: {
     addTree: async (_: any, { name, fruit, latitude, longitude }: any, context: any) => {
-      if (!context.user) throw new AuthenticationError('Not logged in');
+      if (!context.user) throw new Error('Not logged in');
       return Tree.create({
         name,
         fruit,
@@ -17,12 +17,12 @@ export const treeResolvers = {
       });
     },
     deleteTree: async (_: any, { id }: any, context: any) => {
-      if (!context.user) throw new AuthenticationError('Not logged in');
+      if (!context.user) throw new Error('Not logged in');
       const tree = await Tree.findById(id);
       if (tree?.createdBy.toString() !== context.user._id) {
-        throw new AuthenticationError('Unauthorized');
+        throw new Error('Unauthorized');
       }
-      await tree.deleteOne();
+      await tree?.deleteOne();
       return tree;
     },
   },

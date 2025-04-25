@@ -1,5 +1,5 @@
-import { resolvers as userResolvers } from './userResolvers';
-import { treeResolvers } from './treeResolvers';
+import { resolvers as userResolvers } from './userResolvers.js';
+import { treeResolvers } from './treeResolvers.js';
 import { mergeResolvers } from '@graphql-tools/merge';
 
 export const resolvers = mergeResolvers([userResolvers, treeResolvers]);

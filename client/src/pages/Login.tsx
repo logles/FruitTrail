@@ -4,6 +4,7 @@
 // import Auth from '../utils/auth';
 // import { login } from "../api/authAPI";
 
+
 // const Login = () => {
 //   const [loginData, setLoginData] = useState({
 //     username: '',
@@ -27,6 +28,9 @@
 //       console.error('Failed to login', err);
 //     }
 //   };
+
+
+// COULD THE BELOW BE MADE INTO A COMPONENT & IMPORTED?
 
 //   return (
 //     <div className='container'>

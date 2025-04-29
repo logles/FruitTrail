@@ -1,3 +1,5 @@
+// MAKING LOGO INTO A COMPONENT SO IT CAN BE REUSED ON DIFFERENT PAGES
+
 import React from 'react';
 
 const TreeLogo: React.FC = () => {

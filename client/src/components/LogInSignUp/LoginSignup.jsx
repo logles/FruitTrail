@@ -13,6 +13,7 @@ const LoginSignup = () => {
                 <div className="underline"></div>
             </div>
             <div className="inputs">
+                {/* action for hiding the name field on the login portion */}
                 {action === "Login" ? <div></div> : <div className="input">
                     <input type="text" placeholder='name' />
                 </div>}
@@ -25,6 +26,7 @@ const LoginSignup = () => {
             </div>
             {action === "Sign Up" ? <div></div> : <div className="forgot-password">forgot password? <span>click here</span></div>}
             <div className="submit-container">
+                {/* action that highlights the button for the page you are on */}
                 <div className={action === "Login" ? "submit grey" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
                 <div className={action === "Sign Up" ? "submit grey" : "submit"} onClick={() => { setAction("Login") }}>Login</div>
             </div>

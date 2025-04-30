@@ -1,0 +1,9 @@
+/* make the whole viewport available to the map */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+  }
+  
+  button, input {
+    font-family: inherit;   /* nice default */
+  }

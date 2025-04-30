@@ -1,16 +1,29 @@
+// // import { Outlet } from 'react-router-dom';
+// import LoginSignup from "./components/LogInSignUp/LoginSignup.jsx"
 // import { Outlet } from 'react-router-dom';
-import LoginSignup from "./components/LogInSignUp/LoginSignup.jsx"
+// import MapPage from './pages/MapPage.tsx';
 
-// uncomment when Navbar component has been made
-// import Navbar from './components/Navbar'; 
+// // uncomment when Navbar component has been made
+// // import Navbar from './components/Navbar'; 
 
-function App() {
+// // function App() {
 
-  return (
-    <div>
-      <LoginSignup />
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       <LoginSignup />
+//     </div>
+//   )
+// }
+// //   return (
+// //     <div>
+// //       <Navbar />
+// //       <main>
+// //         <Outlet />
+// //       </main>
+// //     </div>
+// //   )
+// // }
 
-export default App
+// export default function App() {
+//   return <MapPage />;
+// }

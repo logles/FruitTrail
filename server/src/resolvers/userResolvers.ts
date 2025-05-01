@@ -1,6 +1,6 @@
 // resolvers/userResolvers.ts
 
-import { User } from '../models/user.js';
+import { User } from '../models/User.js';
 import { signToken } from '../utils/auth.js';
 
 export const resolvers = {

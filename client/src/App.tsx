@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+// import { Outlet } from 'react-router-dom';
 import MapPage from './pages/MapPage.tsx';
 
 // uncomment when Navbar component has been made

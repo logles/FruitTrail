@@ -1,13 +1,11 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, Types, Document } from 'mongoose';
 
-interface ITree {
+export interface ITree extends Document {
   name: string;
   fruit: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
-  createdBy: string; // User ID
+  location: { latitude: number; longitude: number };
+  /** Can be populated ObjectId OR just the string value */
+  createdBy: Types.ObjectId | string;
 }
 
 const treeSchema = new Schema<ITree>({
@@ -24,4 +22,4 @@ const treeSchema = new Schema<ITree>({
   },
 });
 
-export const Tree = model<ITree>('Tree', treeSchema);
+export const Tree = mongoose.model<ITree>('Tree', treeSchema);

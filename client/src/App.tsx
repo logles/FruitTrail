@@ -1,6 +1,10 @@
+// // import { Outlet } from 'react-router-dom';
+// import LoginSignup from "./components/LogInSignUp/LoginSignup.jsx"
+// import { Outlet } from 'react-router-dom';
+// import MapPage from './pages/MapPage.tsx';
 
 // import { Outlet } from 'react-router-dom';
-import MapPage from './pages/MapPage.tsx';
+// import MapPage from './pages/MapPage.tsx';
 
 // <<<<<<< bret
 // // import { Outlet } from 'react-router-dom';
@@ -33,6 +37,10 @@ import MapPage from './pages/MapPage.tsx';
 // //     </div>
 // //   )
 // // }
+
+// export default function App() {
+//   return <MapPage />;
+// }
 // >>>>>>> main
 
 // export default function App() 

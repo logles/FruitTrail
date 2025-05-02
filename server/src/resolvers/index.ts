@@ -1,6 +1,13 @@
 import { resolvers as userResolvers } from './userResolvers.js';
 import { treeResolvers } from './treeResolvers.js';
-import { mergeResolvers } from '@graphql-tools/merge';
 
-export const resolvers = mergeResolvers([userResolvers, treeResolvers]);
-
+export const resolvers = {
+  Query: {
+    ...userResolvers.Query,
+    ...treeResolvers.Query,
+  },
+  Mutation: {
+    ...userResolvers.Mutation,
+    ...treeResolvers.Mutation,
+  },
+};

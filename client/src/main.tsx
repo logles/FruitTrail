@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 );
 
 
-// THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE
+// THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE (added to/updated to try to fit our app)
 
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -36,8 +36,12 @@ const router = createBrowserRouter([
         element: <HomePage />
       }, 
       {
-        path: '/login',
+        path: '/Login',
         element: <Login />
+      },
+      {
+        path: '/MapPage',
+        element: <MapPage />
       }
     ]
   }
@@ -53,22 +57,23 @@ if (rootElement) {
 
 // /////////////////THIS IS WHAT WAS HERE BEFORE//////////////////////////////////
 
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-// Ensure the root element exists before calling createRoot
-const rootElement = document.getElementById("root");
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import App from "./App.tsx";
+// import "./index.css";
+// import MapPage from './pages/MapPage.tsx';
+// // Ensure the root element exists before calling createRoot
+// const rootElement = document.getElementById("root");
 
-if (!rootElement) {
-  throw new Error(
-    "Root element not found. Make sure you have <div id='root'></div> in your index.html."
-  );
-}
+// if (!rootElement) {
+//   throw new Error(
+//     "Root element not found. Make sure you have <div id='root'></div> in your index.html."
+//   );
+// }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// const root = ReactDOM.createRoot(rootElement);
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );

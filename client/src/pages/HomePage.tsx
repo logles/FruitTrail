@@ -1,11 +1,12 @@
-import Header from '../components/Header.tsx';
-import Footer from '../components/Footer.tsx';
+// import Header from '../components/Header.tsx';
+// import Footer from '../components/Footer.tsx';
 import TreeLogo from '../components/TreeLogo.tsx';
 
 function Home() {
     return (
+        <>
         <div>
-            <Header />
+            {/* <Header /> */}
         </div>
         
             <div>
@@ -13,8 +14,9 @@ function Home() {
             </div>
 
         <div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
+        </>
     );
 }
 

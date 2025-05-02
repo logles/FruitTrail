@@ -1,7 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express';
 import { Tree } from '../models/Tree.js';
 
-
 export const treeResolvers = {
   Query: {
     // Return all trees with populated creator

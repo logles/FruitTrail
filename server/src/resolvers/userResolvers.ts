@@ -1,5 +1,3 @@
-// resolvers/userResolvers.ts
-
 import { User } from '../models/User.js';
 import { signToken } from '../utils/auth.js';
 

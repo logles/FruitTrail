@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { Tree } from "../models/Tree.js";
-import { User } from "../models/User.js";
+import { Tree } from "../models/Arbol.js";
+import { User } from "../models/Members.js";
 import dotenv from "dotenv";
 
 dotenv.config();

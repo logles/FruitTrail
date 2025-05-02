@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 );
 
 
-// THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE
+// THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE (added to/updated to try to fit our app)
 
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';

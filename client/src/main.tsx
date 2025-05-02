@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import { ApolloProvider } from '@apollo/client';
+import { apollo } from './api/apollo.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={apollo}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
 );
-
 
 
 // THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE

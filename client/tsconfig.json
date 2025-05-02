@@ -1,6 +1,8 @@
 {
   "extends": "../tsconfig.json",
+
   "compilerOptions": {
+    /* React-and-Vite specifics */
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
@@ -11,7 +13,20 @@
     "isolatedModules": true,
     "noEmit": true,
 
-    "jsx": "react-jsx"
+    /* React 17+ automatic JSX transform */
+    "jsx": "react-jsx",
+
+    /* Path alias so '@/…' maps to /src */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src", "src/utils", "pages", "vite-env.d.ts"]
+
+  "include": [
+    "src",
+    "src/utils",
+    "pages",
+    "vite-env.d.ts"
+  ]
 }

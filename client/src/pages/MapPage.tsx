@@ -1,3 +1,6 @@
+import Header from '@/components/Header';
+// import Footer from '@/components/Footer';
+
 import {
   GoogleMap,
   Marker,
@@ -63,6 +66,8 @@ export default function MapPage() {
 
   /* ─── render ─────────────────────────────────────────────── */
   return (
+    <div>
+      <Header />
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -125,6 +130,8 @@ export default function MapPage() {
         </InfoWindow>
       )}
     </GoogleMap>
+    {/* <Footer/>     */}
+</div>
   );
 }
 

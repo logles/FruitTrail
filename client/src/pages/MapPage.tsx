@@ -16,8 +16,10 @@ import {
   DELETE_TREE,
 } from '@/api/treeAPI.ts';
 import { useAuth } from '@/hooks/useAuth';
+import ControlPanel from '@/components/ControlPanel/ControlPanel';
 
-const containerStyle = { width: '100%', height: '100%' };
+// const containerStyle = { width: '100%', height: '100%' };
+const containerStyle = { width: '100vw', height: '100vh' };
 const defaultCenter = { lat: 33.4484, lng: -112.0740 };
 
 export default function MapPage() {
@@ -68,6 +70,26 @@ export default function MapPage() {
   return (
     <div>
       <Header />
+      {/* mockup map */}
+      {/* <div style={{
+        width: "100vw",
+        height: "80%",
+        position: "absolute",
+        top: "176px",
+        left: "0",
+        // zIndex: "-1",
+        overflow: "scroll",
+      }}>
+        <img 
+          style={{
+            height: "1500px",
+            width: "3000px"
+          }}
+        src="./assets/EugeneMap.png"/>
+      </div> */}
+
+
+
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -130,6 +152,9 @@ export default function MapPage() {
         </InfoWindow>
       )}
     </GoogleMap>
+
+    <ControlPanel />
+
     {/* <Footer/>     */}
 </div>
   );

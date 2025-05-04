@@ -85,7 +85,7 @@ body {
 .submit-container {
     display: flex;
     gap: 30px;
-    margin: 60px auto;
+    margin: 30px auto;
 }
 
 .submit {

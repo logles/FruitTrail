@@ -42,7 +42,7 @@ const LoginSignup = () => {
                 }
 
             }
-        } catch (err){
+        } catch (err) {
             alert("error")
             console.log(err)
         }
@@ -77,11 +77,18 @@ const LoginSignup = () => {
             {action === "Sign Up" ? <div></div> : <div className="forgot-password">forgot password? <span>click here</span></div>}
             <div className="submit-container">
                 <button onClick={handleSubmit} className="submit">Submit</button>
-            </div>
-            <div className="submit-container">
+
                 {/* action that highlights the button for the page you are on */}
-                <div className={action === "Login" ? "submit grey" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
-                <div className={action === "Sign Up" ? "submit grey" : "submit"} onClick={() => { setAction("Login") }}>Login</div>
+                {
+                    action == "Login" ?
+                        (<div className={action === "Login" ? "submit" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
+                        ) : null
+                }
+                {
+                    action == "Sign Up" ?
+                        (<div className={action === "Sign Up" ? "submit" : "submit"} onClick={() => { setAction("Login") }}>Login</div>
+                        ) : null
+                }
             </div>
         </div>
     )

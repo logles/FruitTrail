@@ -29,7 +29,7 @@ html {
     transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
   } */
 
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     #h1 {
         display: none;
     }

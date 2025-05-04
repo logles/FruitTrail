@@ -45,6 +45,9 @@ function ControlPanel() {
                         </button>
                     </div>
                     // TODO: figure out way to make burger button go away when clicked, and other buttons show up on the left ???
+                    // TODO: figure out how to display burger button again once button functionality is complete ... 
+                    // will most likely need to have button functionality coded in order for this to work ... 
+                    // could make it so "account" button goes back to homepage?
                 ) : null
             }
         </>

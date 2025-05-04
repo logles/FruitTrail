@@ -107,9 +107,28 @@ body {
     color: #e49289;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 475px) {
+    .container{
+        margin-top: 2px;
+    }
+    .header {
+        margin-top:3px;
+    }
+    .underline {
+        display: none;
+    }
     .submit-container {
         flex-direction: column;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        gap: 5px;
+    }
+    .inputs {
+        margin-top: 2px;
+        gap: 10px;
+    }
+    .forgot-password {
+        margin-top: 15px;
     }
   
 }

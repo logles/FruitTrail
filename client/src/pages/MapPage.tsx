@@ -31,11 +31,11 @@ export default function MapPage() {
   const [center, setCenter] = useState(defaultCenter);
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => setCenter({ lat: coords.latitude, lng: coords.longitude }),
-    () => {}
+    () => { }
   );
 
   const { data, loading, refetch } = useQuery(GET_TREES);
-  const [addTree]    = useMutation(ADD_TREE);
+  const [addTree] = useMutation(ADD_TREE);
   const [updateTree] = useMutation(UPDATE_TREE);
   const [deleteTree] = useMutation(DELETE_TREE);
 
@@ -70,93 +70,74 @@ export default function MapPage() {
   return (
     <div>
       <Header />
-      {/* mockup map */}
-      {/* <div style={{
-        width: "100vw",
-        height: "80%",
-        position: "absolute",
-        top: "176px",
-        left: "0",
-        // zIndex: "-1",
-        overflow: "scroll",
-      }}>
-        <img 
-          style={{
-            height: "1500px",
-            width: "3000px"
-          }}
-        src="./assets/EugeneMap.png"/>
-      </div> */}
 
-
-
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={12}
-      options={{ disableDefaultUI: true }}
-      onClick={handleMapClick}
-    >
-      {/* existing tree markers */}
-      {markers.map(m => (
-        <Marker
-          key={m.id}
-          position={m.pos}
-          onClick={() => setSelected(m.data)}
-          icon={
-            m.owner
-              ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-              : undefined
-          }
-        />
-      ))}
-
-      {/* add-tree form */}
-      {addPos && (
-        <InfoWindow position={addPos} onCloseClick={() => setAddPos(null)}>
-          <AddTreeForm
-            onSave={async (name, fruit) => {
-              await addTree({
-                variables: { name, fruit, lat: addPos.lat, lng: addPos.lng },
-              });
-              setAddPos(null);
-              refetch();
-            }}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={12}
+        options={{ disableDefaultUI: true }}
+        onClick={handleMapClick}
+      >
+        {/* existing tree markers */}
+        {markers.map(m => (
+          <Marker
+            key={m.id}
+            position={m.pos}
+            onClick={() => setSelected(m.data)}
+            icon={
+              m.owner
+                ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                : undefined
+            }
           />
-        </InfoWindow>
-      )}
+        ))}
 
-      {/* info window for view / edit / delete */}
-      {selected && (
-        <InfoWindow
-          position={{
-            lat: selected.location.latitude,
-            lng: selected.location.longitude,
-          }}
-          onCloseClick={() => setSelected(null)}
-        >
-          <TreeCard
-            tree={selected}
-            isOwner={user && user._id === selected.createdBy._id}
-            onSave={async (name, fruit) => {
-              await updateTree({ variables: { id: selected._id, name, fruit } });
-              setSelected(null);
-              refetch();
+        {/* add-tree form */}
+        {addPos && (
+          <InfoWindow position={addPos} onCloseClick={() => setAddPos(null)}>
+            <AddTreeForm
+              onSave={async (name, fruit) => {
+                await addTree({
+                  variables: { name, fruit, lat: addPos.lat, lng: addPos.lng },
+                });
+                setAddPos(null);
+                refetch();
+              }}
+            />
+          </InfoWindow>
+        )}
+
+        {/* info window for view / edit / delete */}
+        {selected && (
+          <InfoWindow
+            position={{
+              lat: selected.location.latitude,
+              lng: selected.location.longitude,
             }}
-            onDelete={async () => {
-              await deleteTree({ variables: { id: selected._id } });
-              setSelected(null);
-              refetch();
-            }}
-          />
-        </InfoWindow>
-      )}
-    </GoogleMap>
+            onCloseClick={() => setSelected(null)}
+          >
+            <TreeCard
+              tree={selected}
+              isOwner={user && user._id === selected.createdBy._id}
+              onSave={async (name, fruit) => {
+                await updateTree({ variables: { id: selected._id, name, fruit } });
+                setSelected(null);
+                refetch();
+              }}
+              onDelete={async () => {
+                await deleteTree({ variables: { id: selected._id } });
+                setSelected(null);
+                refetch();
+              }}
+            />
+          </InfoWindow>
+        )}
+      </GoogleMap>
 
-    <ControlPanel />
+      <ControlPanel />
 
-    {/* <Footer/>     */}
-</div>
+      {/* <Footer/>     */}
+    </div>
   );
 }
 

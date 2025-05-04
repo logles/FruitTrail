@@ -12,23 +12,43 @@ const LoginSignup = () => {
     const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    function handleSubmit() {
-        if (action == "Sign Up"){
-            addUser({
-                variables: {  
-                    "username": username,
-                    "email": email,
-                    "password": password
-                  }
-        
-            })
-        }
-        else {
+    async function handleSubmit() {
+        try {
 
+
+            if (action == "Sign Up") {
+                const response = await addUser({
+                    variables: {
+                        "username": username,
+                        "email": email,
+                        "password": password
+                    }
+
+                })
+                if (response?.data?.addUser?.token) {
+                    window.location.href = "/MapPage"
+                }
+
+            }
+            else {
+                const response = await logInUser({
+                    variables: {
+                        "username": username,
+                        "password": password
+                    }
+                })
+                if (response?.data?.login?.token) {
+                    window.location.href = "/MapPage"
+                }
+
+            }
+        } catch (err){
+            alert("error")
+            console.log(err)
         }
     }
     return (
-        
+
         <div className="container">
             <div className="header">
                 <div className="text">{action}</div>
@@ -36,25 +56,27 @@ const LoginSignup = () => {
             </div>
             <div className="inputs">
                 {/* action for hiding the name field on the login portion */}
-                {action === "Login" ? <div></div> : <div className="input">
-                    <input type="text" placeholder='username' value = {username} onChange = {(event)=>{
+                <div className="input">
+                    {/* {action === "Login" ? <div></div> : <div className="input"> */}
+                    <input type="text" placeholder='username' value={username} onChange={(event) => {
                         setUserName(event.target.value)
-                    }}/>
+                    }} />
+                </div>
+                {/* <div className="input">  */}
+                {action === "Login" ? <div></div> : <div className="input">
+                    <input type="email" placeholder='email' value={email} onChange={(event) => {
+                        setEmail(event.target.value)
+                    }} />
                 </div>}
                 <div className="input">
-                    <input type="email" placeholder='email' value = {email} onChange = {(event)=>{
-                        setEmail(event.target.value)
-                    }}/>
-                </div>
-                <div className="input">
-                    <input type="password" placeholder='password' value = {password} onChange = {(event)=>{
+                    <input type="password" placeholder='password' value={password} onChange={(event) => {
                         setPassword(event.target.value)
-                    }}/>
+                    }} />
                 </div>
             </div>
             {action === "Sign Up" ? <div></div> : <div className="forgot-password">forgot password? <span>click here</span></div>}
-            <div className = "submit-container">
-                <button onClick = {handleSubmit}className ="submit">Submit</button>
+            <div className="submit-container">
+                <button onClick={handleSubmit} className="submit">Submit</button>
             </div>
             <div className="submit-container">
                 {/* action that highlights the button for the page you are on */}

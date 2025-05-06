@@ -16,7 +16,7 @@ export function signToken({ _id, username }: Payload): string {
   return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 }
 
-export function authMiddleware({ req }: { req: Request }) {
+export async function authMiddleware({ req }: { req: Request }) {
   // Check for token in header
   let token = req.headers.authorization || '';
 
@@ -25,11 +25,14 @@ export function authMiddleware({ req }: { req: Request }) {
     token = token.slice(7).trim();
   }
 
+  console.log(token)
+
   if (!token) return req;
 
   try {
     const { data } = jwt.verify(token, secret) as { data: Payload };
     (req as any).user = data;
+    console.log(data)
   } catch {
     console.log('Invalid token');
   }

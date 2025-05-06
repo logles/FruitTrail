@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(
   "/graphql",
   expressMiddleware(server, {
-    context: async ({ req }) => authMiddleware({ req }),
+    context: authMiddleware
   })
 );
 

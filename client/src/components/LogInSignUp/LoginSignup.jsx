@@ -23,6 +23,7 @@ const LoginSignup = () => {
           },
         });
         if (response?.data?.addUser?.token) {
+          localStorage.setItem("id_token", response?.data?.addUser?.token)
           window.location.href = "/MapPage";
         }
       } else {
@@ -33,6 +34,7 @@ const LoginSignup = () => {
           },
         });
         if (response?.data?.login?.token) {
+          localStorage.setItem("id_token", response?.data?.addUser?.token)
           window.location.href = "/MapPage";
         }
       }

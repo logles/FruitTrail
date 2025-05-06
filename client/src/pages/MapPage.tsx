@@ -6,35 +6,31 @@ import {
   ADD_TREE,
   UPDATE_TREE,
   DELETE_TREE,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
 } from '@/api/treeAPI.ts';
+import { GET_ME } from '@/api/userAPI.ts';
 import { useAuth } from '@/hooks/useAuth';
 import ControlPanel from '@/components/ControlPanel/ControlPanel';
 import Header from '@/components/Header';
 
+
 const containerStyle = { width: '100vw', height: '100vh' };
 const defaultCenter = { lat: 33.4484, lng: -112.0740 };
 
-// type Poi ={ key: string, location: google.maps.LatLngLiteral }
-
-// const locations: Poi[] = [];
-
-// function CustomPin() {
-//   return (
-//     <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#000'} />
-//   )
-// }
-
 export default function MapPage() {
-  const { user } = useAuth();
+  const auth = useAuth();
+  const { data: userData, refetch: refetchUser } = useQuery(GET_ME);
+  const user = userData?.me || auth.user;
+
   const [center, setCenter] = useState(defaultCenter);
   const [addPos, setAddPos] = useState<{ lat: number; lng: number } | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
 
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => setCenter({ lat: coords.latitude, lng: coords.longitude }),
-      () => { }
+      () => {}
     );
   }, []);
 
@@ -42,6 +38,8 @@ export default function MapPage() {
   const [addTree] = useMutation(ADD_TREE);
   const [updateTree] = useMutation(UPDATE_TREE);
   const [deleteTree] = useMutation(DELETE_TREE);
+  const [addFavorite] = useMutation(ADD_FAVORITE);
+  const [removeFavorite] = useMutation(REMOVE_FAVORITE);
 
   const trees = data?.trees ?? [];
 
@@ -87,12 +85,18 @@ export default function MapPage() {
                   const response = await addTree({
                     variables: { name, fruit, lat: addPos.lat, lng: addPos.lng },
                   });
-                  console.log('Tree added:', response.data);
-                  setAddPos(null);
-                  refetch();
+
+                  if (response.data?.addTree) {
+                    console.log('Tree added:', response.data.addTree);
+                  } else {
+                    console.error('Tree not added — no data returned.');
+                  }
                 } catch (err) {
                   console.error('Failed to add tree:', err);
                 }
+
+                setAddPos(null);
+                refetch();
               }}
             />
           </InfoWindow>
@@ -119,6 +123,19 @@ export default function MapPage() {
                 setSelected(null);
                 refetch();
               }}
+              onFavorite={async (treeId: string, isFavorited: boolean) => {
+                try {
+                  if (isFavorited) {
+                    await removeFavorite({ variables: { treeId } });
+                  } else {
+                    await addFavorite({ variables: { treeId } });
+                  }
+                  refetchUser();
+                } catch (err) {
+                  console.error('Favorite toggle failed:', err);
+                }
+              }}
+              user={user}
             />
           </InfoWindow>
         )}
@@ -127,6 +144,7 @@ export default function MapPage() {
     </div>
   );
 }
+
 
 function AddTreeForm({ onSave }: { onSave: (n: string, f: string) => void }) {
   const [name, setName] = useState('');
@@ -144,22 +162,34 @@ function AddTreeForm({ onSave }: { onSave: (n: string, f: string) => void }) {
 }
 
 function TreeCard({
-  tree, isOwner, onSave, onDelete,
+  tree, isOwner, onSave, onDelete, onFavorite, user
 }: {
   tree: any;
   isOwner: boolean;
   onSave: (n: string, f: string) => void;
   onDelete: () => void;
+  onFavorite: (treeId: string, isFavorited: boolean) => void;
+  user: any;
 }) {
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState(tree.name);
   const [fruit, setFruit] = useState(tree.fruit);
+
+  const isFavorited = user?.favorites?.some((fav: any) => fav._id === tree._id);
 
   if (!isOwner || !edit) {
     return (
       <div className="w-60">
         <h3 className="font-semibold">{tree.name}</h3>
         <p className="text-sm">{tree.fruit}</p>
+        {user && (
+          <button
+            className="text-yellow-500 text-sm"
+            onClick={() => onFavorite(tree._id, isFavorited)}
+          >
+            {isFavorited ? '★ Unfavorite' : '☆ Favorite'}
+          </button>
+        )}
         {isOwner && (
           <div className="flex gap-3 mt-2">
             <button onClick={() => setEdit(true)}

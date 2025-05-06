@@ -35,13 +35,13 @@ export default function MapPage() {
   const trees = data?.trees ?? [];
 
   const handleMapClick = useCallback(
-    (e: any) => {
-      if (!user || !e || typeof e.lat !== 'number' || typeof e.lng !== 'number') return;
-      const lat = e.lat;
-      const lng = e.lng;
+    (event: any) => {
+      const lat = event.detail?.latLng?.lat;
+      const lng = event.detail?.latLng?.lng;
+      if (typeof lat !== 'number' || typeof lng !== 'number') return;
       setAddPos({ lat, lng });
     },
-    [user],
+    []
   );
 
   if (loading) return <p className="p-4">Loading…</p>;
@@ -53,7 +53,7 @@ export default function MapPage() {
         style={containerStyle}
         defaultCenter={center}
         defaultZoom={12}
-        onClick={({ detail }) => handleMapClick(detail)}
+        onClick={handleMapClick}
       >
         {trees.map((t: any) => (
           <Marker

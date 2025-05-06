@@ -8,10 +8,11 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200px;
+    margin-top: 50px;
     background: #8bb669;
     padding-bottom: 30px;
-    width: 600px;
+    /* max-width: 600px; */
+    max-width: 600px;
 }
 
 .header {
@@ -47,21 +48,25 @@ body {
     display: flex;
     align-items: center;
     margin: auto;
-    width: 480px;
+    /* max-width: 480px; */
+    width: 80%;
     height: 80px;
     background: #558d43;
     border-radius: 6px;
+    padding: 15px;
 }
 
 /* .input img {} */
 
 .input input {
     height: 50px;
-    width: 400px;
+    /* max-width: 400px; */
+    width: 100%;
     background: transparent;
     border: none;
     outline: none;
-    color: #558d43;
+    /* color: #558d43; */
+    color: #ffffff;
     font-size: 19px;
 }
 
@@ -80,7 +85,7 @@ body {
 .submit-container {
     display: flex;
     gap: 30px;
-    margin: 60px auto;
+    margin: 30px auto;
 }
 
 .submit {
@@ -102,6 +107,31 @@ body {
     color: #e49289;
 }
 
+@media (max-width: 475px) {
+    .container{
+        margin-top: 2px;
+    }
+    .header {
+        margin-top:3px;
+    }
+    .underline {
+        display: none;
+    }
+    .submit-container {
+        flex-direction: column;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        gap: 5px;
+    }
+    .inputs {
+        margin-top: 2px;
+        gap: 10px;
+    }
+    .forgot-password {
+        margin-top: 15px;
+    }
+  
+}
 
 
 /* RGB (126, 166, 89) — HEX #7ea659

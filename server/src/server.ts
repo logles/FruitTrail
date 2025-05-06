@@ -19,7 +19,17 @@ const server = new ApolloServer({
 });
 
 await server.start();
-
+// add middleware for req.body json
+app.use(
+  express.urlencoded(
+    {
+      extended: true
+    }
+  )
+)
+app.use(
+  express.json()
+)
 app.use(
   '/graphql',
   expressMiddleware(server, {

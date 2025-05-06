@@ -3,9 +3,9 @@ import { expressMiddleware } from '@apollo/server/express4';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { typeDefs } from './schemas/typeDefs';
-import { authMiddleware } from './utils/auth';
-import { resolvers } from './resolvers';
+import { typeDefs } from './schemas/typeDefs.js';
+import { authMiddleware } from './utils/auth.js';
+import { resolvers } from './resolvers/index.js';
 
 
 // Load environment variables from .env file
@@ -19,7 +19,17 @@ const server = new ApolloServer({
 });
 
 await server.start();
-
+// add middleware for req.body json
+app.use(
+  express.urlencoded(
+    {
+      extended: true
+    }
+  )
+)
+app.use(
+  express.json()
+)
 app.use(
   '/graphql',
   expressMiddleware(server, {

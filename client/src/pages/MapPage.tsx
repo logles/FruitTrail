@@ -79,7 +79,7 @@ export default function MapPage() {
         onClick={handleMapClick}
       >
         {/* existing tree markers */}
-        {markers.map(m => (
+        {markers.map((m: { id: string; pos: { lat: number; lng: number }; owner: boolean; data: any }) => (
           <Marker
             key={m.id}
             position={m.pos}

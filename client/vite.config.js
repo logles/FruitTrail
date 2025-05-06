@@ -17,8 +17,8 @@ export default defineConfig({
     port: 5173,        // aligns with Google‑key referrer & README
     open: true,        // auto‑opens browser on npm run dev
     proxy: {
-      '/api': {
-        target: 'http://localhost:3001', // Express/GraphQL back end
+      '/graphql': {
+        target: 'http://localhost:4000', // Express/GraphQL back end
         changeOrigin: true,
         secure: false,
       },

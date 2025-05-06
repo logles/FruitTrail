@@ -1,49 +1,20 @@
-// // import { Outlet } from 'react-router-dom';
-// import LoginSignup from "./components/LogInSignUp/LoginSignup.jsx"
-// import { Outlet } from 'react-router-dom';
-// import MapPage from './pages/MapPage.tsx';
+import { Outlet } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
+import { apollo } from './api/apollo.ts';
+// uncomment when Navbar component has been made
+// import Navbar from './components/Navbar'; 
 
-// import { Outlet } from 'react-router-dom';
-// import MapPage from './pages/MapPage.tsx';
+function App() {
 
-// <<<<<<< bret
-// // import { Outlet } from 'react-router-dom';
-// import LoginSignup from "./components/LogInSignUp/LoginSignup.jsx"
+  return (
+    <ApolloProvider client={apollo}>
+      {/* <Navbar /> */}
+      <main>
+        <Outlet />
+      </main>
+    </ApolloProvider>
+)
+}
 
-// import { Outlet } from 'react-router-dom';
-// import MapPage from './pages/MapPage.tsx';
-// >>>>>>> main
+export default App
 
-
-// // uncomment when Navbar component has been made
-// // import Navbar from './components/Navbar'; 
-
-// // function App() {
-
-// <<<<<<< bret
-//   return (
-//     <div>
-//       <LoginSignup />
-//     </div>
-//   )
-// }
-// =======
-// //   return (
-// //     <div>
-// //       <Navbar />
-// //       <main>
-// //         <Outlet />
-// //       </main>
-// //     </div>
-// //   )
-// // }
-
-// export default function App() {
-//   return <MapPage />;
-// }
-// >>>>>>> main
-
-// export default function App() 
-// <!--       {
-//   return <MapPage />;
-// } -->

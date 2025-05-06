@@ -20,7 +20,7 @@ import App from './App.tsx';
 import HomePage from './pages/HomePage.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import MapPage from './pages/MapPage.tsx';
-// import Login from './pages/Login.tsx';
+import Login from './components/LogInSignUp/LoginSignup.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,10 +32,10 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePage />
       }, 
-      // {
-      //   path: '/Login',
-      //   element: <Login />
-      // },
+      {
+        path: '/Login',
+        element: <Login />
+      },
       {
         path: '/MapPage',
         element: <MapPage />

@@ -14,11 +14,22 @@ import Header from '@/components/Header';
 const containerStyle = { width: '100vw', height: '100vh' };
 const defaultCenter = { lat: 33.4484, lng: -112.0740 };
 
+// type Poi ={ key: string, location: google.maps.LatLngLiteral }
+
+// const locations: Poi[] = [];
+
+// function CustomPin() {
+//   return (
+//     <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#000'} />
+//   )
+// }
+
 export default function MapPage() {
   const { user } = useAuth();
   const [center, setCenter] = useState(defaultCenter);
   const [addPos, setAddPos] = useState<{ lat: number; lng: number } | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
+
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -72,11 +83,16 @@ export default function MapPage() {
           <InfoWindow position={addPos} onCloseClick={() => setAddPos(null)}>
             <AddTreeForm
               onSave={async (name, fruit) => {
-                await addTree({
-                  variables: { name, fruit, lat: addPos.lat, lng: addPos.lng },
-                });
-                setAddPos(null);
-                refetch();
+                try {
+                  const response = await addTree({
+                    variables: { name, fruit, lat: addPos.lat, lng: addPos.lng },
+                  });
+                  console.log('Tree added:', response.data);
+                  setAddPos(null);
+                  refetch();
+                } catch (err) {
+                  console.error('Failed to add tree:', err);
+                }
               }}
             />
           </InfoWindow>

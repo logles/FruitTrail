@@ -1,26 +1,14 @@
-// import React from 'react';
-// import { ApolloProvider } from '@apollo/client';
-// import { apollo } from './api/apollo.ts';
-
-// ReactDOM.createRoot(document.getElementById('root')!).render(
-//   <React.StrictMode>
-//     <ApolloProvider client={apollo}>
-//       <App />
-//     </ApolloProvider>
-//   </React.StrictMode>,
-// );
-
-
-// THE BELOW IS BORROWED CODE FROM MODULE 14 TO USE AS A TEMPLATE (added to/updated to try to fit our app)
-
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
-import App from './App.tsx';
+import { APIProvider } from '@vis.gl/react-google-maps';
+import { ApolloProvider } from '@apollo/client';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import App from './App';
+import apollo from './api/apollo.ts';
 import HomePage from './pages/HomePage.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
 import MapPage from './pages/MapPage.tsx';
-// import Login from './pages/Login.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -28,28 +16,20 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <HomePage />
-      }, 
-      // {
-      //   path: '/Login',
-      //   element: <Login />
-      // },
-      {
-        path: '/MapPage',
-        element: <MapPage />
-      }
+      { index: true, element: <HomePage /> },
+      { path: '/MapPage', element: <MapPage /> }
     ]
   }
-])
+]);
 
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-  <RouterProvider router={router} />);
-}
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 
-
-
-
+root.render(
+  <React.StrictMode>
+    <ApolloProvider client={apollo}>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY!}>
+        <RouterProvider router={router} />
+      </APIProvider>
+    </ApolloProvider>
+  </React.StrictMode>
+);

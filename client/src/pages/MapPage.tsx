@@ -1,13 +1,5 @@
-import Header from '@/components/Header';
-// import Footer from '@/components/Footer';
-
-import {
-  GoogleMap,
-  Marker,
-  InfoWindow,
-  useJsApiLoader,
-} from '@react-google-maps/api';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Map, Marker, InfoWindow } from '@vis.gl/react-google-maps';
 import { useQuery, useMutation } from '@apollo/client';
 import {
   GET_TREES,
@@ -17,22 +9,23 @@ import {
 } from '@/api/treeAPI.ts';
 import { useAuth } from '@/hooks/useAuth';
 import ControlPanel from '@/components/ControlPanel/ControlPanel';
+import Header from '@/components/Header';
 
-// const containerStyle = { width: '100%', height: '100%' };
 const containerStyle = { width: '100vw', height: '100vh' };
 const defaultCenter = { lat: 33.4484, lng: -112.0740 };
 
 export default function MapPage() {
-  const { user } = useAuth();           // ← returns { user } or null
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!,
-  });
-
+  const { user } = useAuth();
   const [center, setCenter] = useState(defaultCenter);
-  navigator.geolocation.getCurrentPosition(
-    ({ coords }) => setCenter({ lat: coords.latitude, lng: coords.longitude }),
-    () => { }
-  );
+  const [addPos, setAddPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [selected, setSelected] = useState<any | null>(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => setCenter({ lat: coords.latitude, lng: coords.longitude }),
+      () => { }
+    );
+  }, []);
 
   const { data, loading, refetch } = useQuery(GET_TREES);
   const [addTree] = useMutation(ADD_TREE);
@@ -40,59 +33,41 @@ export default function MapPage() {
   const [deleteTree] = useMutation(DELETE_TREE);
 
   const trees = data?.trees ?? [];
-  const [addPos, setAddPos] = useState<{ lat: number; lng: number } | null>(null);
-  const [selected, setSelected] = useState<any | null>(null);
 
   const handleMapClick = useCallback(
-    (e: google.maps.MapMouseEvent) => {
-      if (!user || !e.latLng) return;          // only logged-in users add pins
-      setAddPos({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+    (e: any) => {
+      if (!user || !e || typeof e.lat !== 'number' || typeof e.lng !== 'number') return;
+      const lat = e.lat;
+      const lng = e.lng;
+      setAddPos({ lat, lng });
     },
     [user],
   );
 
-  const markers = useMemo(
-    () =>
-      trees.map((t: any) => ({
-        id: t._id,
-        pos: { lat: t.location.latitude, lng: t.location.longitude },
-        owner: user && user._id === t.createdBy._id,
-        data: t,
-      })),
-    [trees, user],
-  );
+  if (loading) return <p className="p-4">Loading…</p>;
 
-  /* ─── loading / error guards ─────────────────────────────── */
-  if (loadError) return <p className="p-4 text-red-600">Map failed to load.</p>;
-  if (!isLoaded || loading) return <p className="p-4">Loading…</p>;
-
-  /* ─── render ─────────────────────────────────────────────── */
   return (
     <div>
       <Header />
-
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={12}
-        options={{ disableDefaultUI: true }}
-        onClick={handleMapClick}
+      <Map
+        style={containerStyle}
+        defaultCenter={center}
+        defaultZoom={12}
+        onClick={({ detail }) => handleMapClick(detail)}
       >
-        {/* existing tree markers */}
-        {markers.map((m: { id: string; pos: { lat: number; lng: number }; owner: boolean; data: any }) => (
+        {trees.map((t: any) => (
           <Marker
-            key={m.id}
-            position={m.pos}
-            onClick={() => setSelected(m.data)}
+            key={t._id}
+            position={{ lat: t.location.latitude, lng: t.location.longitude }}
+            onClick={() => setSelected(t)}
             icon={
-              m.owner
+              user && user._id === t.createdBy._id
                 ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                : undefined
+                : null
             }
           />
         ))}
 
-        {/* add-tree form */}
         {addPos && (
           <InfoWindow position={addPos} onCloseClick={() => setAddPos(null)}>
             <AddTreeForm
@@ -107,7 +82,6 @@ export default function MapPage() {
           </InfoWindow>
         )}
 
-        {/* info window for view / edit / delete */}
         {selected && (
           <InfoWindow
             position={{
@@ -132,16 +106,12 @@ export default function MapPage() {
             />
           </InfoWindow>
         )}
-      </GoogleMap>
-
+      </Map>
       <ControlPanel />
-
-      {/* <Footer/>     */}
     </div>
   );
 }
 
-/* ───────── helper components ──────────────────────────────── */
 function AddTreeForm({ onSave }: { onSave: (n: string, f: string) => void }) {
   const [name, setName] = useState('');
   const [fruit, setFruit] = useState('');

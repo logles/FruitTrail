@@ -44,7 +44,7 @@ mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('🌱 Connected to MongoDB');
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running at http://localhost:${PORT}/graphql`);
+      console.log(`🚀 Server is running at http://localhost:${PORT}/`);
     });
   })
   .catch((err) => {

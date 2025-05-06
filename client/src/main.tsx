@@ -8,6 +8,7 @@ import App from './App';
 import apollo from './api/apollo.ts';
 import HomePage from './pages/HomePage.tsx';
 import MapPage from './pages/MapPage.tsx';
+import Login from './components/LogInSignUp/LoginSignup.jsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 
 const router = createBrowserRouter([
@@ -16,8 +17,18 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: '/MapPage', element: <MapPage /> }
+      {
+        index: true,
+        element: <HomePage />
+      }, 
+      {
+        path: '/Login',
+        element: <Login />
+      },
+      {
+        path: '/MapPage',
+        element: <MapPage />
+      }
     ]
   }
 ]);

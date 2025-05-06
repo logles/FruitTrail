@@ -8,6 +8,7 @@ import { authMiddleware } from "./utils/auth.js";
 import { resolvers } from "./resolvers/index.js";
 import path from "node:path";
 import type { Request, Response } from "express";
+const __dirname = path.resolve();
 
 // Load environment variables from .env file
 dotenv.config();
@@ -36,10 +37,10 @@ app.use(
 
 //set up static folder and home route
 // if (process.env.NODE_ENV === "production") {
-app.use(express.static("../client/dist"));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get("*", (_req: Request, res: Response) => {
-  res.sendFile(path.join("../client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 // }
 

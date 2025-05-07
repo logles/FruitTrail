@@ -5,6 +5,7 @@ export const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
+    favorites: [Tree]
   }
 
   type Auth {
@@ -35,21 +36,24 @@ export const typeDefs = gql`
     login(username: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
 
-     addTree(
-    name: String!
-    fruit: String!
-    latitude: Float!
-    longitude: Float!
-  ): Tree!
+    addTree(
+      name: String!
+      fruit: String!
+      latitude: Float!
+      longitude: Float!
+    ): Tree!
 
-  updateTree(
-    id: ID!
-    name: String
-    fruit: String
-    latitude: Float
-    longitude: Float
-  ): Tree!
+    updateTree(
+      id: ID!
+      name: String
+      fruit: String
+      latitude: Float
+      longitude: Float
+    ): Tree!
 
-  deleteTree(id: ID!): Boolean!   # true on success
+    deleteTree(id: ID!): Boolean!
+
+    addFavorite(treeId: ID!): User
+    removeFavorite(treeId: ID!): User
   }
 `;

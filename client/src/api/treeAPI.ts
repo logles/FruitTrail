@@ -33,5 +33,27 @@ export const DELETE_TREE = gql`
   mutation DeleteTree($id:ID!) { deleteTree(id:$id) }
 `;
 
+export const ADD_FAVORITE = gql`
+  mutation AddFavorite($treeId: ID!) {
+    addFavorite(treeId: $treeId) {
+      _id
+      favorites {
+        _id
+      }
+    }
+  }
+`;
+
+export const REMOVE_FAVORITE = gql`
+  mutation RemoveFavorite($treeId: ID!) {
+    removeFavorite(treeId: $treeId) {
+      _id
+      favorites {
+        _id
+      }
+    }
+  }
+`;
+
 
 //this folder can be graphql folder if needed.
